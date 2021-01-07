@@ -9,10 +9,11 @@
 | kana_last_name     | string     | NOT NULL          |
 | kana_first_name    | string     | NOT NULL          |
 | birth_day          | date       | NOT NULL          |
-| user_address       | references | foreign_key: true |
+| item_id            | references | foreign_key: true |
+
 ### Association
 - has_many :items
-
+- belongs_to :management
 
 ## itemsテーブル
 | columns                | types      | options           |
@@ -25,24 +26,23 @@
 | prefecture_id          | integer    | NOT NULL          |
 | scheduled_delivery_id  | integer    | NOT NULL          |
 | price                  | string     | NOT NULL          |
-| user                   | references | foreign_key: true |
 
 ### Association
 - belongs_to :user
+- belongs_to :management
 
 ## users_addressテーブル
-| columns         | types      | options           |
-| --------------- | ---------- | ----------------- |
-| postal_code     | string     | NOT NULL          | 
-| prefecture      | integer    | NOT NULL          |
-| city            | string     | NOT NULL          |
-| address         | string     | NOT NULL          |
-| building        | string     |                   |
-| phone_number    | string     | NOT NULL          |
-| user_id         | references | foreign_key: true |
+| columns            | types      | options           |
+| ------------------ | ---------- | ----------------- |
+| postal_code        | string     | NOT NULL          | 
+| prefecture_id      | integer    | NOT NULL          |
+| city               | string     | NOT NULL          |
+| address            | string     | NOT NULL          |
+| building           | string     |                   |
+| phone_number       | string     | NOT NULL          |
 
 ### Association
-- 購入管理のテーブルに紐つける
+- belongs_to :management
 
 
 ## managementテーブル
@@ -51,3 +51,7 @@
 | user_id         | references | foreign_key: true |
 | item_id         | references | foreign_key: true |
 
+### Association
+- belongs_to :user
+- belongs_to :item
+- has_one :user_address
