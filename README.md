@@ -1,55 +1,55 @@
 ## usersテーブル
-| columns            | types      | options           |
-| ------------------ | ---------- | ----------------- |
-| nickname           | string     | NOT NULL          | 
-| email              | string     | NOT NULL          |
-| encrypted_password | string     | NOT NULL          |
-| last_name          | string     | NOT NULL          |   
-| first_name         | string     | NOT NULL          |
-| kana_last_name     | string     | NOT NULL          |
-| kana_first_name    | string     | NOT NULL          |
-| birth_day          | date       | NOT NULL          |
-| item_id            | references | foreign_key: true |
+| columns            | types  | options                   |
+| ------------------ | ------ | ------------------------- |
+| nickname           | string | null: false               | 
+| email              | string | null: false, unique: true |
+| encrypted_password | string | null: false               |
+| last_name          | string | null: false               |
+| first_name         | string | null: false               |
+| kana_last_name     | string | null: false               |
+| kana_first_name    | string | null: false               |
+| birth_day          | date   | null: false               |
 
 ### Association
 - has_many :items
-- belongs_to :management
+- has_many :managements
 
 ## itemsテーブル
-| columns                | types      | options           |
-| ---------------------- | ---------- | ----------------- |
-| name                   | string     | NOT NULL          |
-| description            | text       | NOT NULL          |
-| category_id            | integer    | NOT NULL          |
-| sales_status_id        | integer    | NOT NULL          |
-| shipping_fee_status_id | integer    | NOT NULL          |
-| prefecture_id          | integer    | NOT NULL          |
-| scheduled_delivery_id  | integer    | NOT NULL          |
-| price                  | string     | NOT NULL          |
+| columns                | types   | options           |
+| ---------------------- | ------- | ----------------- |
+| name                   | string  | null: false       |
+| description            | text    | null: false       |
+| category_id            | integer | null: false       |
+| sales_status_id        | integer | null: false       |
+| shipping_fee_status_id | integer | null: false       |
+| prefecture_id          | integer | null: false       |
+| scheduled_delivery_id  | integer | null: false       |
+| price                  | string  | null: false       |
+| user_id                | integer | foreign_key: true |
 
 ### Association
 - belongs_to :user
-- belongs_to :management
+- has_one :management
 
 ## users_addressテーブル
-| columns            | types      | options           |
-| ------------------ | ---------- | ----------------- |
-| postal_code        | string     | NOT NULL          | 
-| prefecture_id      | integer    | NOT NULL          |
-| city               | string     | NOT NULL          |
-| address            | string     | NOT NULL          |
-| building           | string     |                   |
-| phone_number       | string     | NOT NULL          |
-
+| columns       | types   | options           |
+| ------------- | ------- | ----------------- |
+| postal_code   | string  | null: false       | 
+| prefecture_id | integer | null: false       |
+| city          | string  | null: false       |
+| address       | string  | null: false       |
+| building      | string  |                   |
+| phone_number  | string  | null: false       |
+| management_id | integer | foreign_key: true |
 ### Association
 - belongs_to :management
 
 
 ## managementテーブル
-| columns         | types      | options           |
-| --------------- | ---------- | ----------------- |
-| user_id         | references | foreign_key: true |
-| item_id         | references | foreign_key: true |
+| columns | types   | options           |
+| ------- | ------- | ----------------- |
+| user_id | integer | foreign_key: true |
+| item_id | integer | foreign_key: true |
 
 ### Association
 - belongs_to :user
