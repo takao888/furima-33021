@@ -12,7 +12,7 @@
 
 ### Association
 - has_many :items
-- has_many :managements
+- has_many :orders
 
 ## itemsテーブル
 | columns                | types   | options           |
@@ -29,9 +29,9 @@
 
 ### Association
 - belongs_to :user
-- has_one :management
+- has_one :order
 
-## users_addressテーブル
+## user_addressesテーブル
 | columns       | types   | options           |
 | ------------- | ------- | ----------------- |
 | postal_code   | string  | null: false       | 
@@ -40,12 +40,14 @@
 | address       | string  | null: false       |
 | building      | string  |                   |
 | phone_number  | string  | null: false       |
-| management_id | integer | foreign_key: true |
+| order_id | integer | foreign_key: true |
+
+
 ### Association
-- belongs_to :management
+- belongs_to :order
 
 
-## managementテーブル
+## orderテーブル
 | columns | types   | options           |
 | ------- | ------- | ----------------- |
 | user_id | integer | foreign_key: true |
