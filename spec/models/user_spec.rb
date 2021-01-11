@@ -26,11 +26,6 @@ RSpec.describe User, type: :model do
       expect(@user).to be_valid
     end
 
-    it "emailには@も必要" do
-      @user.email = "p@p"
-      expect(@user).to be_valid
-    end
-
   describe "ユーザー新規登録" do
     it "nicknameが空では登録できない" do
       @user.nickname = ''
@@ -51,6 +46,13 @@ RSpec.describe User, type: :model do
       user_b.valid?
       expect(user_b.errors.full_messages).to include("Email has already been taken")
     end
+
+    it "emailは＠が含まれていないと登録できない" do
+      @user.email = "pp"
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Email is invalid")
+    end
+
 
     it "passwordが空では登録できない" do
       @user.password = ''
