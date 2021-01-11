@@ -8,6 +8,23 @@ RSpec.describe User, type: :model do
       expect(@user).to be_valid
     end
 
+    it "passwordが6文字以上であれば登録できる" do
+      @user.password = "000000"
+      expect(@user).to be_valid
+    end
+
+    it "encrypted_passwordはpasswordと同じであれば登録できる" do
+     @user.password = "ppp000"
+     @user.encrypted_password = "ppp000"
+     expect(@user).to be_valid
+    end
+
+    it "passwordは半角英数字であれば登録できる" do
+      @user.password = "ppp000"
+      expect(@user).to be_valid
+    end
+
+
   describe "ユーザー新規登録" do
     it "nicknameが空では登録できない" do
       @user.nickname = ''
@@ -35,23 +52,38 @@ RSpec.describe User, type: :model do
       expect(@user.errors.full_messages).to include("Password can't be blank")
     end
 
-    it "passwordは６文字以上の半角英数字でないと登録できない" do
-    end
 
-    it "encrypted_passwordはpasswordと同じでないと登録できない" do
-    end
 
     it "last_nameがないと登録できない" do
+      @user.last_name = ''
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Last name can't be blank")
     end
 
     it "first_nameがないと登録できない" do
+      @user.first_name = ''
+      @user.valid?
+      expect(@user.errors.full_messages).to include("First name can't be blank")
     end
 
     it "kana_last_nameがないと登録できない" do
+      @user.kana_last_name = ''
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Kana last name can't be blank")
+
     end
 
     it "kana_first_nameがないと登録できない" do
+      @user.kana_first_name = ''
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Kana first name can't be blank")
     end
 
+    it "birth_dayがないと登録できない" do
+      @user.birth_day = ''
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Birth day can't be blank")
+    end
   end
 end
+
