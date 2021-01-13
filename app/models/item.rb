@@ -8,7 +8,7 @@ class Item < ApplicationRecord
   belongs_to :shipping_fee_status
   belongs_to :prefecture
   belongs_to :scheduled_delivery
-
+  has_one_attached :image
 
 
   with_options presence: true do
@@ -19,7 +19,7 @@ class Item < ApplicationRecord
   validates :shipping_fee_status_id, numericality: { other_than: 1 } 
   validates :prefecture_id, numericality: { other_than: 1 } 
   validates :scheduled_delivery_id, numericality: { other_than: 1 } 
-  validates :price
+  validates :price, length: {minimum: 3, maxinum: 7},numericality: { only_integer: true, greater_than: 300, less_than: 9999999 }, format: { with: /\A[0-9]+\z/}
   validates :user_id
   end
 end
