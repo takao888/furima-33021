@@ -53,8 +53,8 @@ end
       expect(@item.errors.full_messages).to include("Scheduled delivery Select")
     end
 
-    it "priceは300未満だとng" do
-      @item.price = "100"
+    it "priceは299以下だとng" do
+      @item.price = "299"
       @item.valid?
       expect(@item.errors.full_messages).to include("Price Out of setting range")
     end
@@ -64,6 +64,25 @@ end
       @item.valid?
       expect(@item.errors.full_messages).to include("Price Out of setting range")
     end
+
+    it "priceが全角文字だとng" do
+      @item.price = "３００"
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Price Out of setting range")
+    end
+
+    it "priceが英数混合だとng" do
+      @item.price = "pp00"
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Price Out of setting range")
+    end
+
+    it "priceが半角英語だけではng" do
+      @item.price = "pppp"
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Price Out of setting range")
+    end
+
   end
 end
 end
