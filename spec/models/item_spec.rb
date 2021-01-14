@@ -1,9 +1,8 @@
 require 'rails_helper'
 RSpec.describe Item, type: :model do
   before do
-    user = FactoryBot.create(:user)
-    @item = FactoryBot.build(:item, user_id: user.id)
-end
+    @item = FactoryBot.build(:item)
+    end
 
   describe "正常" do
     it "全ての項目の入力が存在すればok" do
@@ -82,7 +81,11 @@ end
       @item.valid?
       expect(@item.errors.full_messages).to include("Price Out of setting range")
     end
-
+    it "画像が空ではng" do
+      @item.image = nil
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Image can't be blank")
+    end
   end
 end
 end

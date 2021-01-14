@@ -10,21 +10,19 @@ class Item < ApplicationRecord
   belongs_to :scheduled_delivery
   has_one_attached :image
 
-
   with_options presence: true do
   validates :name
   validates :description
   validates :price
-  validates :user_id
-  with_options numericality: { other_than: 1, message: "Select" } 
+  validates :user
+  validates :image
+  with_options numericality: { other_than: 1, message: "Select" } do
   validates :category_id
   validates :sales_status_id
   validates :shipping_fee_status_id
   validates :prefecture_id
   validates :scheduled_delivery_id
   end
-  end
-
+end
   validates_inclusion_of :price, in: 300..9_999_999, message: "Out of setting range"
-  #validates :price, format: { with: /\A[0-9]+\z/, message:"Half-width number" }
 end
