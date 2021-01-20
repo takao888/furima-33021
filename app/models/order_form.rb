@@ -1,19 +1,23 @@
-class Order_form
+class OrderForm
   include ActiveModel::Model
-  attr_accessor :postal_code, :prefecture_id, :city, :addresses, :building, :phone_number
-#  :card_number, :card_exp_month, :card_exp_year, :card_cvc
+  attr_accessor :card_number, :card_exp_month, :card_exp_year, :card_cvc, :postal_code, :prefecture_id, :city, :building, :phone_number, :address
 
-with_options presence: true do
-  validates :postal_code
-  validates :prefecture_id
-  validates :city
-  validates :addresses
-  validates :building
-  validates :phone_number
-end
 
-def save
-  
-end
+  with_options presence: true do
+    validates :postal_code, format: {with: /\A\d{3}[-]\d{4}\z/}
+    validates :city
+    validates :address
+    validates :phone_number
+    validates :prefecture
+    validates :card_number
+    validates :card_exp_month
+    validates :card_exp_year
+    validates :card_cvc
+  end
+    #validates :building
 
+    def save
+      order = Order.create
+      User_address.create(postal_code: postal_code, city: city, address: address, phone_number: phone_number, prefecture: prefecture)
+    end
 end
