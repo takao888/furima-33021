@@ -4,13 +4,12 @@ class OrderForm
 
 
   with_options presence: true do
-    validates :postal_code, format: {with: /\A\d{3}[-]\d{4}\z/}
-    validates :city, format: { with: /\A[ぁ-んァ-ン一-龥]/}
+    validates :postal_code, format: {with: /\A\d{3}[-]\d{4}\z/, message: "Input correctly"}
+    validates :prefecture_id, numericality: { other_than: 1 , message: "Select"}
+    validates :city
     validates :address
-    validates :phone_number, format: {with: /\A\d{10}\z|\A\d{11}\z/}
-    validates :prefecture_id, numericality: { other_than: 0 }
+    validates :phone_number, format: {with: /0[789]0\d{4}\d{4}/, message:"Input only number"}
   end
-    #validates :building
 
     def save
       order = Order.create(user_id: user_id, item_id: item_id)

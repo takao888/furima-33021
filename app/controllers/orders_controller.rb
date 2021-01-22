@@ -1,12 +1,16 @@
 class OrdersController < ApplicationController
   before_action :set_item, only: [:index, :create]
+  before_action :authenticate_user!, only: :index
 
   def index
     @order_form = OrderForm.new
+    if current_user == @item.user
+      redirect_to root_path
+    end
+  
   end
 
   def create
-   binding.pry
     @order_form = OrderForm.new(order_params)
     if @order_form.valid?
       @order_form.save
