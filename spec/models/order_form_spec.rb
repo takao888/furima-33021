@@ -10,6 +10,10 @@ end
     expect(@order_form).to be_valid
   end
 
+  it "priceとtokenがあれば保存ができること" do
+    expect(@order_form).to be_valid
+  end
+
   it "postal_codeが空だと登録できない" do
     @order_form.postal_code = ""
     @order_form.valid?
@@ -57,4 +61,12 @@ end
     @order_form.valid?
     expect(@order_form.errors.full_messages).to include("Phone number Input only number")
   end
+
+
+  it "tokenが空では登録できないこと" do
+    @order_form.token = ""
+    @order_form.valid?
+    expect(@order_form.errors.full_messages).to include("Token can't be blank")
+  end
+
 end

@@ -1,6 +1,6 @@
 class OrderForm
   include ActiveModel::Model
-  attr_accessor :card_number, :card_exp_month, :card_exp_year, :card_cvc, :postal_code, :prefecture_id, :city, :building, :phone_number, :address, :user_id, :order_id, :item_id
+  attr_accessor :card_number, :card_exp_month, :card_exp_year, :card_cvc, :postal_code, :prefecture_id, :city, :building, :phone_number, :address, :user_id, :order_id, :item_id, :token
 
 
   with_options presence: true do
@@ -9,6 +9,7 @@ class OrderForm
     validates :city
     validates :address
     validates :phone_number, format: {with: /0[789]0\d{4}\d{4}/, message:"Input only number"}
+    validates :token
   end
 
     def save
