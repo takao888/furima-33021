@@ -2,7 +2,9 @@ require 'rails_helper'
 
 RSpec.describe OrderForm, type: :model do
 before do
-  @order_form = FactoryBot.build(:order_form)
+  item = FactoryBot.create(:item)
+  user = FactoryBot.create(:user)
+  @order_form = FactoryBot.build(:order_form, user_id: user.id, item_id: item.id)
 end
 
 
@@ -58,7 +60,9 @@ end
   end
 
   it "phone_numberが12桁以上だと登録できない" do
-    #そもそも12桁入らないのにテストする必要あるのでしょうか。
+    @order_form.phone_number = "090123456789"
+    @order_form.valid?
+    expect(@order_form.errors.full_messages).to include("Phone number Input only number")
   end
 
   it "phone_numberは全角だと登録できない" do
