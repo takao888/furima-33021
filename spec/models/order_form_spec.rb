@@ -7,15 +7,20 @@ before do
   @order_form = FactoryBot.build(:order_form, user_id: user.id, item_id: item.id)
 end
 
+  describe "登録できる時" do
 
-  it "building以外が正しく入力されていれば登録できる" do
-    expect(@order_form).to be_valid
+    it "building以外が正しく入力されていれば登録できる" do
+      expect(@order_form).to be_valid
+    end
+
+    it "建物名がなくても登録できる" do
+      @order_form.building = ""
+      expect(@order_form).to be_valid
+    end
+
   end
 
-  it "建物名がなくても保存できることを証明する正常系のテスト" do
-    @order_form.building = ""
-    expect(@order_form).to be_valid
-  end
+  describe "登録できない時" do
 
   it "postal_codeが空だと登録できない" do
     @order_form.postal_code = ""
@@ -65,6 +70,12 @@ end
     expect(@order_form.errors.full_messages).to include("Phone number Input only number")
   end
 
+  it "phone_numberが9桁以下だと登録できない" do
+    @order_form.phone_number = "090123456"
+    @order_form.valid?
+    expect(@order_form.errors.full_messages).to include("Phone number Input only number")
+  end
+
   it "phone_numberは全角だと登録できない" do
     @order_form.phone_number = "０９０１２３４１２３４"
     @order_form.valid?
@@ -88,5 +99,6 @@ end
     @order_form.valid?
     expect(@order_form.errors.full_messages).to include("Item can't be blank")
   end
-  
+end
+
 end
