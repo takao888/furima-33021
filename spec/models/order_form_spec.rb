@@ -10,7 +10,8 @@ end
     expect(@order_form).to be_valid
   end
 
-  it "priceとtokenがあれば保存ができること" do
+  it "建物名がなくても保存できることを証明する正常系のテスト" do
+    @order_form.building = ""
     expect(@order_form).to be_valid
   end
 
@@ -21,7 +22,7 @@ end
   end
 
   it "postal_codeが全角だと登録できない" do
-    @order_form.postal_code = "１１１１１１１"
+    @order_form.postal_code = "１１１-１１１１"
     @order_form.valid?
     expect(@order_form.errors.full_messages).to include("Postal code Input correctly")
   end
@@ -33,7 +34,7 @@ end
   end
 
   it "prefecture_idが1だと登録できない" do
-    @order_form.prefecture_id = "1"
+    @order_form.prefecture_id = 1
     @order_form.valid?
     expect(@order_form.errors.full_messages).to include("Prefecture Select")
   end
@@ -56,12 +57,15 @@ end
     expect(@order_form.errors.full_messages).to include("Phone number can't be blank")
   end
 
+  it "phone_numberが12桁以上だと登録できない" do
+    #そもそも12桁入らないのにテストする必要あるのでしょうか。
+  end
+
   it "phone_numberは全角だと登録できない" do
     @order_form.phone_number = "０９０１２３４１２３４"
     @order_form.valid?
     expect(@order_form.errors.full_messages).to include("Phone number Input only number")
   end
-
 
   it "tokenが空では登録できないこと" do
     @order_form.token = ""
@@ -69,4 +73,16 @@ end
     expect(@order_form.errors.full_messages).to include("Token can't be blank")
   end
 
+  it "user_idがないと登録できない" do
+    @order_form.user_id = ""
+    @order_form.valid?
+    expect(@order_form.errors.full_messages).to include("User can't be blank")
+  end
+
+  it "item_idがないと登録できない" do
+    @order_form.item_id = ""
+    @order_form.valid?
+    expect(@order_form.errors.full_messages).to include("Item can't be blank")
+  end
+  
 end

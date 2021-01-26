@@ -6,7 +6,13 @@ class OrdersController < ApplicationController
     @order_form = OrderForm.new
     if current_user == @item.user
       redirect_to root_path
+      # 現在ログインしているユーザーと出品者が同じならトップページに
+    else
+      redirect_to root_path
     end
+  end
+
+  def new
   end
 
   def create
@@ -23,7 +29,7 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order_form).permit(:postal_code, :prefecture_id, :city, :phone_number, :address, :building, :item_id)
+    params.require(:order_form).permit(:postal_code, :prefecture_id, :city, :phone_number, :address, :building)
     .merge(user_id: current_user.id,item_id: params[:item_id], token: params[:token])
   end
 
