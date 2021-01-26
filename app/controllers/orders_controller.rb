@@ -1,15 +1,11 @@
 class OrdersController < ApplicationController
   before_action :set_item, only: [:index, :create]
   before_action :authenticate_user!, only: :index
+  before_action :move_to_index, only: :index
+  before_action :move_to_index2, only: :index
 
   def index
     @order_form = OrderForm.new
-    if current_user == @item.user
-      redirect_to root_path
-      # 現在ログインしているユーザーと出品者が同じならトップページに
-    else
-      redirect_to root_path
-    end
   end
 
   def new
@@ -44,6 +40,13 @@ class OrdersController < ApplicationController
       card: order_params[:token],
       currency: 'jpy'
     )
+  end
+
+  def move_to_index
+    redirect_to root_path if current_user == @item.user
+  end
+  def move_to_index2
+    redirect_to root_path unless @item.order.blank?
   end
 end
 
