@@ -7,11 +7,11 @@ class User < ApplicationRecord
 
          #association
          has_many :items
-         #has_many :orders
+         has_many :orders
 
          with_options presence: true do
          validates :nickname
-         validates :email, uniqueness: true
+
          validates :password, length: { minimum: 6 }, format: { with: /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]{6,100}\Z/i, message: 'Include both letters and numbers'}
          validates :encrypted_password
          validates :last_name, format: { with: /\A[ぁ-んァ-ン一-龥]/, message: 'Full-width characters'}

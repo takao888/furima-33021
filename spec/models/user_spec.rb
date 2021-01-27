@@ -4,6 +4,7 @@ RSpec.describe User, type: :model do
     @user = FactoryBot.build(:user)
   end
 
+  context '登録できる時' do
     it "全ての項目の入力が存在すれば登録できること" do
       expect(@user).to be_valid
     end
@@ -25,8 +26,9 @@ RSpec.describe User, type: :model do
       @user.encrypted_password = "ppp000"
       expect(@user).to be_valid
     end
+  end
 
-  describe "ユーザー新規登録" do
+  context "登録できない時" do
     it "nicknameが空では登録できない" do
       @user.nickname = ''
       @user.valid?
