@@ -7,7 +7,7 @@ before do
   @order_form = FactoryBot.build(:order_form, user_id: user.id, item_id: item.id)
 end
 
-  describe "登録できる時" do
+  context "登録できる時" do
 
     it "building以外が正しく入力されていれば登録できる" do
       expect(@order_form).to be_valid
@@ -20,7 +20,7 @@ end
 
   end
 
-  describe "登録できない時" do
+  context "登録できない時" do
 
   it "postal_codeが空だと登録できない" do
     @order_form.postal_code = ""

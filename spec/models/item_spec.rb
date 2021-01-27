@@ -4,13 +4,13 @@ RSpec.describe Item, type: :model do
     @item = FactoryBot.build(:item)
     end
 
-  describe "正常" do
+  context "登録できる時" do
     it "全ての項目の入力が存在すればok" do
       expect(@item).to be_valid
     end
 
-  describe "異常" do
-    it "nameは空だとng" do
+  context "異常" do
+    it "登録できない時" do
       @item.name = ""
       @item.valid?
       expect(@item.errors.full_messages).to include("Name can't be blank")
